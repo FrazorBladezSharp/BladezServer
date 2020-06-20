@@ -15,16 +15,26 @@
  * given by Qt    : doc.qt.io/qt-5/opensourcelicence.html
  *
  * ---------------------------------------------------*/
-#include <QCoreApplication>
+#pragma once 
 
-#include "Src/Core/ServerHeart.h"
+#include <QObject>
+#include <QUdpSocket>
+#include <QNetworkDatagram>
 
-int main(int argc, char *argv[])
+class ServerHeart : public QObject
 {
-    QCoreApplication a(argc, argv);
-    
-    ServerHeart server;
-    server.InitSocket();
-    
-    return a.exec();
-}
+    Q_OBJECT
+
+        QUdpSocket* m_udpSocket;
+
+    public:
+        explicit ServerHeart();
+        ~ServerHeart();
+
+        void InitSocket();
+
+        void readPendingDatagrams();
+ 
+    private:
+        void processTheDatagram(QNetworkDatagram datagram);
+};
