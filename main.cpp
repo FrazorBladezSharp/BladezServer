@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     
     ServerHeart server;
-    server.InitSocket();
     
     return a.exec();
 }

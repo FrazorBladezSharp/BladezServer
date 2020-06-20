@@ -22,33 +22,54 @@
 ServerHeart::ServerHeart() 
     : m_udpSocket(new QUdpSocket(this))
 {
-    m_udpSocket->bind(QHostAddress::LocalHost, 2020);
-    qDebug("ServerHeart Constructed. \n");
+    m_udpSocket->bind(
+        QHostAddress::LocalHost, // this needs to be the servers IP Address.
+        IN_PORT
+    );
+
+    // (TODO:) (FRAZOR) intiialize Services ???
+
+    connect(
+        m_udpSocket,
+        &QUdpSocket::readyRead,
+        this,
+        &ServerHeart::readPendingDatagrams
+    );
+
+    qDebug(
+        "ServerHeart Constructed. \n"
+    );
 }
 
 ServerHeart::~ServerHeart()
 {
     delete m_udpSocket;
-    qDebug("ServerHeart Destroyed. \n");
+
+    qDebug(
+        "ServerHeart Destroyed. \n"
+    );
 }
-
-void ServerHeart::InitSocket()
-{
-    connect(m_udpSocket, &QUdpSocket::readyRead,
-             this, &ServerHeart::readPendingDatagrams);
-
- }
 
 void ServerHeart::readPendingDatagrams()
 {
     while (m_udpSocket->hasPendingDatagrams()) 
     {
-        QNetworkDatagram datagram = m_udpSocket->receiveDatagram();
-        processTheDatagram(datagram);
+        QNetworkDatagram datagram = 
+            m_udpSocket->receiveDatagram();
+
+        processTheDatagram(
+            datagram
+        );
     }
  }
 
 ////////////////////// Private //////////////////////////
+
+// All of the private functions will be the core of the services 
+// that we shall offer.
+// these all need changing to a generic format.
+// need to have a series of numerical services
+// and a series of numerical responces.
 
 void ServerHeart::processTheDatagram(QNetworkDatagram datagram)
 {
@@ -65,7 +86,7 @@ void ServerHeart::sendDatagrams()
 {
     QByteArray message = CreateTheDatagram();
     QUdpSocket* tempSocket = new QUdpSocket(this);
-    tempSocket->bind(QHostAddress::LocalHost, 20201);
+    tempSocket->bind(QHostAddress::LocalHost, OUT_PORT);
     tempSocket->writeDatagram(message, QHostAddress::LocalHost, 20201);
     qDebug(" Shutdown Datagram Sent. \n");
 }

@@ -19,6 +19,9 @@
  * ---------------------------------------------------*/
 #pragma once 
 
+#define OUT_PORT 20201
+#define IN_PORT 2020
+
 #include <QObject>
 #include <QUdpSocket>
 #include <QNetworkDatagram>
@@ -33,8 +36,6 @@ class ServerHeart : public QObject
     public:
         explicit ServerHeart();
         ~ServerHeart();
-
-        void InitSocket();
 
         void readPendingDatagrams();
  
