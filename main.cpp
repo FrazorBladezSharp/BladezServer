@@ -4,6 +4,7 @@
  * Project created by Frazor Sharp : 2020 Jun 20th
  *
  *      Bladez - Qt C++ Version Bladez 1.0
+ *      Github : FrazorBladezSharp
  *
  * Contact email  : frazor.sharp@virginmail.com
  * Website        : 
