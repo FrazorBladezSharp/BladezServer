@@ -47,7 +47,30 @@ void ServerHeart::readPendingDatagrams()
     }
  }
 
+////////////////////// Private //////////////////////////
+
 void ServerHeart::processTheDatagram(QNetworkDatagram datagram)
 {
     qDebug() << "Data Recieved : " << datagram.data();
+    QByteArray message = datagram.data();
+    QHostAddress sender = datagram.senderAddress();
+    qDebug() << "Sent By : " << sender;
+
+    // close the client 
+    sendDatagrams();
+}
+
+void ServerHeart::sendDatagrams()
+{
+    QByteArray message = CreateTheDatagram();
+    QUdpSocket* tempSocket = new QUdpSocket(this);
+    tempSocket->bind(QHostAddress::LocalHost, 20201);
+    tempSocket->writeDatagram(message, QHostAddress::LocalHost, 20201);
+    qDebug(" Shutdown Datagram Sent. \n");
+}
+
+QByteArray ServerHeart::CreateTheDatagram()
+{
+    QByteArray stuff("0");
+    return stuff;
 }

@@ -20,6 +20,7 @@
 #include <QObject>
 #include <QUdpSocket>
 #include <QNetworkDatagram>
+#include <QByteArray>
 
 class ServerHeart : public QObject
 {
@@ -37,4 +38,6 @@ class ServerHeart : public QObject
  
     private:
         void processTheDatagram(QNetworkDatagram datagram);
+        void sendDatagrams();
+        QByteArray CreateTheDatagram();
 };
